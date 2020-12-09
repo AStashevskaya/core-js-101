@@ -37,8 +37,8 @@ function Rectangle(width, height) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -53,8 +53,17 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
+function fromJSON(/** proto, json */) {
   throw new Error('Not implemented');
+  // const constructor = proto;
+  // const obj = JSON.parse(json);
+  // const objentr = Object.entries(obj);
+  // objentr.forEach((el) => {
+  //   const [key, value] = el;
+  //   constructor[key] = value;
+  //   // proto[el[0]] = el[1];
+  // });
+  // return constructor;
 }
 
 
