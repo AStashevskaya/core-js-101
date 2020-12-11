@@ -132,8 +132,8 @@ function repeatString(value, count) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  return str.replace(value, '');
 }
 
 /**
@@ -211,8 +211,41 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  // throw new Error('Not implemented');
+  const firstStart = '┌';
+  const lastStart = '└';
+  const firstFinish = '┐';
+  const lastFinish = '┘';
+  const h = '│';
+  const w = '─';
+
+  let figure = '';
+  for (let i = 0; i < height; i += 1) {
+    let str = '';
+    if (i === 0) {
+      str += firstStart;
+      for (let j = 1; j <= width - 2; j += 1) {
+        str += w;
+      }
+      str += firstFinish;
+    } else if (i === height - 1) {
+      str += lastStart;
+      for (let j = 1; j <= width - 2; j += 1) {
+        str += w;
+      }
+      str += lastFinish;
+    } else {
+      str += h;
+      for (let j = 1; j <= width - 2; j += 1) {
+        str += ' ';
+      }
+      str += h;
+    }
+    str += '\n';
+    figure += str;
+  }
+  return figure;
 }
 
 
@@ -232,8 +265,29 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  let word = '';
+  for (let i = 0; i < str.length; i += 1) {
+    const code = str.charCodeAt(i);
+    let letter;
+    if (code < 91 && code >= 65) {
+      if (code < 78) {
+        letter = String.fromCharCode(code + 13);
+      } else {
+        letter = String.fromCharCode(code - 13);
+      }
+    } else if (code < 123 && code >= 97) {
+      if (code < 110) {
+        letter = String.fromCharCode(code + 13);
+      } else {
+        letter = String.fromCharCode(code - 13);
+      }
+    } else {
+      letter = str[i];
+    }
+    word += letter;
+  }
+  return word;
 }
 
 /**
