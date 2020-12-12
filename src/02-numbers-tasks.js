@@ -35,8 +35,8 @@ function getRectangleArea(width, height) {
  *   3.14 => 19.729201864543903
  *   0    => 0
  */
-function getCicleCircumference(/* radius */) {
-  throw new Error('Not implemented');
+function getCicleCircumference(radius) {
+  return 2 * Math.PI * radius;
 }
 
 /**
@@ -73,8 +73,10 @@ function getAverage(value1, value2) {
  *   (0,0) (1,0)    => 1
  *   (-5,0) (10,-10) => 18.027756377319946
  */
-function getDistanceBetweenPoints(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getDistanceBetweenPoints(x1, y1, x2, y2) {
+  const x = (x2 - x1) ** 2;
+  const y = (y2 - y1) ** 2;
+  return Math.sqrt(x + y);
 }
 
 /**
@@ -112,8 +114,13 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  const numerator = x1 * x2 + y1 * y2;
+  const powX = x1 ** 2 + y1 ** 2;
+  const powY = x2 ** 2 + y2 ** 2;
+  const denominator = Math.sqrt(powX * powY);
+  const cos = numerator / denominator;
+  return Math.acos(cos);
 }
 
 /**
@@ -183,8 +190,21 @@ function getParallelipidedDiagonal(a, b, c) {
  *   1678, 2  => 1700
  *   1678, 3  => 2000
  */
-function roundToPowerOfTen(/* num, pow */) {
-  throw new Error('Not implemented');
+function roundToPowerOfTen(num, pow) {
+  if (pow === 0) return num;
+
+  let str = [...String(num)];
+  str = str.map((el) => Number(el));
+
+  for (let i = str.length - 1; i >= str.length - pow; i -= 1) {
+    const number = str[i];
+    str[i] = 0;
+    if (number >= 5) {
+      str[i - 1] += 1;
+    }
+  }
+  str = str.map((el) => String(el));
+  return Number(str.join(''));
 }
 
 /**
