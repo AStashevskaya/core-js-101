@@ -75,8 +75,32 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  const endDateDay = endDate;
+  const startDateDay = startDate;
+  const startHours = startDateDay.getUTCHours();
+  const startMin = startDateDay.getUTCMinutes();
+  const startSec = startDateDay.getUTCSeconds();
+  const startMilsec = startDateDay.getUTCMilliseconds();
+
+  const endHours = endDateDay.getUTCHours();
+  const endMin = endDateDay.getUTCMinutes();
+  const endSec = endDateDay.getUTCSeconds();
+  const endMilsec = endDateDay.getUTCMilliseconds();
+
+  const difHours = endHours - startHours;
+  const difMin = endMin - startMin;
+  const difSec = endSec - startSec;
+  const difMilsec = endMilsec - startMilsec;
+
+  function addzero(num) {
+    return num < 10 ? `0${num}` : num;
+  }
+  function cento(number) {
+    return number < 100 ? `0${addzero(number)}` : number;
+  }
+  const string = `${addzero(difHours)}:${addzero(difMin)}:${addzero(difSec)}.${cento(difMilsec)}`;
+  return string;
 }
 
 
@@ -96,8 +120,28 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  const day = new Date(date);
+  const hours = day.getUTCHours();
+  const minuets = day.getUTCMinutes();
+
+  const anglePermin = 360 / 60;
+  const anglePerhour = 360 / 12;
+
+  let hoursAnngle = (hours * anglePerhour) >= 360
+    ? (hours * anglePerhour) % 360 : hours * anglePerhour;
+
+  if (minuets !== 0) {
+    const minPartinHour = 60 / minuets;
+    const minPartinHourAngle = anglePerhour / minPartinHour;
+    hoursAnngle += minPartinHourAngle;
+  }
+
+  const minAnngle = minuets * anglePermin;
+
+  const dif = Math.abs(hoursAnngle - minAnngle) > 180
+    ? Math.abs(hoursAnngle - minAnngle) - 180 : Math.abs(hoursAnngle - minAnngle);
+  return (Math.PI / 180) * dif;
 }
 
 
